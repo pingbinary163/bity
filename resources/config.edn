@@ -1,0 +1,7 @@
+{:database    {:adapter       "postgresql"
+               :username      #or [#env "BITY_DB_USERNAME" "postgres"]
+               :password      #or [#env "BITY_DB_PASSWORD" "YOURS"]
+               :server-name   #or [#env "BITY_DB_HOST" "192.168.0.188"]
+               :database-name #or [#env "BITY_DB_NAME" "bity"]
+               :port-number   #or [#env "BITY_DB_PORT" 5432]}
+ :http-server {:port 8080}}
