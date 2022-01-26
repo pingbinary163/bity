@@ -5,40 +5,6 @@
             [app.handlers.helpers :as helpers]
             [app.handlers.helpers :refer [content-json]]))
 
-;; cors
-(def cors-headers
-  "Generic CORS headers"
-  {"Access-Control-Allow-Origin"  "*"
-   "Access-Control-Allow-Headers" "*"
-   "Access-Control-Allow-Methods" "POST, GET, OPTIONS"})
-
-(defn preflight?
-  "Returns true if the request is a preflight request"
-  [request]
-  (= (request :request-method) :options))
-
-(defn wrap-cors
-  "Allow requests from all origins - also check preflight"
-  [handler]
-  (fn [request]
-    (if (preflight? request)
-      {:status 200
-       :headers cors-headers}
-      (let [response (handler request)]
-        (update-in response [:headers]
-                   merge cors-headers)))))
-
-;(defn wrap-cors
-;  "Wrap the server response in a Control-Allow-Origin Header to
-;  allow connections from the web app."
-;  [handler]
-;  (fn [& request]
-;    (let [response (handler request)]
-;      (-> response
-;          (assoc-in [:headers "Access-Control-Allow-Origin"] "*")
-;          (assoc-in [:headers "Access-Control-Allow-Headers"] "*")
-;          (assoc-in [:headers "Access-Control-Allow-Methods"] "*")))))
-
 ;; global exception handler
 (defn wrap-exception [handler]
   (fn [request]
